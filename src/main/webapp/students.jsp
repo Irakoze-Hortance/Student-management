@@ -38,9 +38,10 @@
                 <td><c:out value="${student.lastName}" /></td>
                 <td><c:out value="${student.gender}" /></td>
                 <td>
-                    <a href="/JspStudentCrud_war_exploded/edit?id=<c:out value='${student.id}' />">Edit</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/JspStudentCrud_war_exploded/delete?id=<c:out value='${student.id}' />">Delete</a>
+                    <a href="/student_management_war_exploded/edit?id=<c:out value='${student.id}' />">Edit</a>
+                    <a href="/student_management_war_exploded/delete?id=<c:out value='${student.id}' />">Delete</a>
+                    <a href="/student_management_war_exploded/view?id=<c:out value='${student.id}'/>">View</a>
+
                 </td>
             </tr>
         </c:forEach>

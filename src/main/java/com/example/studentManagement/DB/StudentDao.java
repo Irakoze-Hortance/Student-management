@@ -66,6 +66,8 @@ public class StudentDao {
         disconnect();
         return listStudent;
     }
+
+
     public boolean deleteStudent(Student student) throws SQLException {
         String sql = "DELETE FROM student where id = ?";
         connect();
@@ -76,6 +78,8 @@ public class StudentDao {
         disconnect();
         return rowDeleted;
     }
+
+
     public boolean updateStudent(Student Student) throws SQLException {
         String sql = "UPDATE student SET first_name = ?, last_name = ?, gender = ?";
         sql += " WHERE id = ?";

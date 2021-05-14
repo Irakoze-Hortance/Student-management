@@ -1,6 +1,6 @@
 package com.example.studentManagement.Controllers;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +18,8 @@ import com.example.studentManagement.models.Student;
 public class Students extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private StudentDao studentDao;
+    Connection connection=null;
+    Statement select=null;
     public void init() {
         String jdbcURL = getServletContext().getInitParameter("jdbcURL");
         String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
@@ -50,6 +52,8 @@ public class Students extends HttpServlet {
                     break;
                 case "/list" :
                     listStudent(request, response);
+                case "/view":
+                    viewStudent(request,response);
                 default:
                     listStudent(request, response);
                     break;
@@ -64,6 +68,15 @@ public class Students extends HttpServlet {
         request.setAttribute("listStudent", listStudent);
         RequestDispatcher dispatcher = request.getRequestDispatcher("students.jsp");
         dispatcher.forward(request, response);
+    }
+    private void viewStudent(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Student existingStudent = studentDao.getStudent(id);
+        request.setAttribute("existingStudent", existingStudent);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("viewStudent.jsp");
+        dispatcher.forward(request, response);
+
     }
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -87,8 +100,7 @@ public class Students extends HttpServlet {
         studentDao.insertStudent(newStudent);
         response.sendRedirect("list");
     }
-    private void updateStudent(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+    private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("firstName");
         String author = request.getParameter("lastName");
