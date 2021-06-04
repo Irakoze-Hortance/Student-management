@@ -9,12 +9,7 @@
         <welcome-file>default.jsp</welcome-file> </welcome-file-list> students_db -->
     <display-name>Students_record</display-name>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-        <welcome-file>index.htm</welcome-file>
         <welcome-file>add_student.jsp</welcome-file>
-        <welcome-file>default.html</welcome-file>
-        <welcome-file>default.htm</welcome-file>
-        <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>jdbcURL</param-name>
@@ -28,13 +23,13 @@
         <param-name>jdbcPassword</param-name>
         <param-value>0001</param-value>
     </context-param>
-    <!--    <servlet>-->
-    <!--        <servlet-name>Students</servlet-name>-->
-    <!--        <servlet-class>com.example.JspStudentCrud.Controllers.Students</servlet-class>-->
-    <!--    </servlet>-->
-    <!--    <servlet-mapping>-->
-    <!--        <servlet-name>Students</servlet-name>-->
-    <!--        <url-pattern>/</url-pattern>-->
-    <!--    </servlet-mapping>-->
+    	<servlet>
+    		<servlet-name>Students</servlet-name>
+    		<servlet-class>com.example.studentManagement.Controllers.Students</servlet-class>
+    	</servlet>
+    	<servlet-mapping>
+    		<servlet-name>Students</servlet-name>
+    		<url-pattern>/</url-pattern>
+    	</servlet-mapping>
 
 </web-app>

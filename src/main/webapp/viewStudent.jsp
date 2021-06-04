@@ -10,20 +10,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Students Managment</title>
+    <title>Students Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<center>
-    <h1>Students Management</h1>
-    <h2>
-        <a href="/studentManagement_war_exploded/new">Add New Student</a>
-        &nbsp;&nbsp;&nbsp;
-        <a href="/studentManagement_war_exploded/list">List All Students</a>
-    </h2>
-</center>
 <div align="center">
-    <table border="1" cellpadding="5">
-        <caption><h2>View single student</h2></caption>
+    <h1>Students Management</h1>
+    <h4>
+        <a href="/student_management_war/new">Add New Student</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="/student_management_war/list">List All Students</a>
+    </h4>
+</div>
+<div align="center" class="container">
+	<h4>View single student</h4>
+    <table class="table table-bordered table-striped">
         <tr>
             <th>ID</th>
             <th>First Name</th>
@@ -37,9 +41,9 @@
             <td><c:out value="${existingStudent.lastName}"/></td>
             <td><c:out value="${existingStudent.gender}"/></td>
             <td>
-                <a href="/studentManagement_war_exploded/edit?id=<c:out value='${existingStudent.id}' />">Edit</a>
+                <a href="/student_management_war/edit?id=<c:out value='${existingStudent.id}' />">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/studentManagement_war_exploded/delete?id=<c:out value='${existingStudent.id}' />">Delete</a>
+                <a class="text-danger" href="/student_management_war/delete?id=<c:out value='${existingStudent.id}' />">Delete</a>
             </td>
         </tr>
     </table>

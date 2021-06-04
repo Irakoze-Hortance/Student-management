@@ -1,7 +1,9 @@
 package com.example.studentManagement.Controllers;
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,13 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.studentManagement.DB.StudentDao;
+import com.example.studentManagement.dao.StudentDaoHbnt;
+import com.example.studentManagement.enums.BedType;
+import com.example.studentManagement.models.Bed;
 import com.example.studentManagement.models.Student;
 /**
  * Servlet implementation class Students
  */
-@WebServlet("/")
-public class Students extends HttpServlet {
+//@WebServlet("/")
+public class Students extends HttpServlet{
     private static final long serialVersionUID = 1L;
+    private StudentDaoHbnt studentDaoHbnt;
     private StudentDao studentDao;
     Connection connection=null;
     Statement select=null;
@@ -24,6 +30,7 @@ public class Students extends HttpServlet {
         String jdbcURL = getServletContext().getInitParameter("jdbcURL");
         String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
         String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
+        studentDaoHbnt=new StudentDaoHbnt();
         studentDao = new StudentDao(jdbcURL, jdbcUsername, jdbcPassword);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -97,7 +104,15 @@ public class Students extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String gender = request.getParameter("gender");
         Student newStudent = new Student(firstName, lastName, gender);
-        studentDao.insertStudent(newStudent);
+        Bed newBed=new Bed("0001", BedType.BUNK);
+        Long bedId=studentDaoHbnt.saveBed(newBed);
+        newBed.setId(bedId);
+
+        Set<Bed> beds=new HashSet<Bed>();
+        beds.add(newBed);
+        newStudent.setBeds(beds);
+//        studentDao.insertStudent(newStudent);
+        studentDaoHbnt.saveStudent(newStudent);
         response.sendRedirect("list");
     }
     private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -111,9 +126,10 @@ public class Students extends HttpServlet {
     }
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Student book = new Student(Long.valueOf(id));
-        studentDao.deleteStudent(book);
+        Long id = (long) Integer.parseInt(request.getParameter("id"));
+        //Student book = new Student(Long.valueOf(id));
+        //studentDao.deleteStudent(book);
+        studentDaoHbnt.deleteStudent(id);
         response.sendRedirect("list");
     }
 }
